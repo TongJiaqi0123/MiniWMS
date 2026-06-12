@@ -1,0 +1,13 @@
+<view class="page">
+  <view class="hero">
+    <view class="title">创建仓库</view>
+    <view class="subtitle">创建后你会成为管理员，可以把邀请码发给同事，由管理员审批后加入。</view>
+  </view>
+  <view class="panel">
+    <view class="field">
+      <text class="label">仓库名称</text>
+      <input value="{{name}}" placeholder="例如：一号仓库" bindinput="onName" />
+    </view>
+    <button class="primary" loading="{{saving}}" bindtap="submit">创建仓库</button>
+  </view>
+</view>

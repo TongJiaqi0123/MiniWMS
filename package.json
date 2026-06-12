@@ -1,0 +1,19 @@
+{
+  "name": "miniwms",
+  "version": "1.0.0",
+  "description": "原生微信小程序 + 微信云开发的轻量库存管理系统。系统以入库记录作为库存批次，支持多租户、邀请码申请加入、管理员审批、最多 3 张入库图片，以及平方/片数换算出库。",
+  "main": "_fix_cf.js",
+  "scripts": {
+    "test": "jest --verbose --forceExit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jest": "^30.4.2"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}

@@ -1,0 +1,68 @@
+<view class="page" wx:if="{{record}}">
+  <view class="card section">
+    <view class="card-head">
+      <view>
+        <view class="card-title">{{record.name}}</view>
+        <view class="meta">规格：{{record.lengthM}}m × {{record.widthM}}m，单片 {{record.pieceArea}}㎡</view>
+      </view>
+      <text class="badge {{record.status === 'cleared' ? 'muted' : ''}}">{{record.status === 'cleared' ? '已清空' : '在库'}}</text>
+    </view>
+    <view class="label">入库图片</view>
+    <view class="image-manager">
+      <view class="image-item" wx:for="{{record.images}}" wx:key="*this">
+        <image class="image-thumb" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-src="{{item}}" />
+        <view class="image-actions">
+          <view class="image-btn image-btn-del" catchtap="deleteImage" data-index="{{index}}">❌</view>
+        </view>
+      </view>
+      <view class="image-add" wx:if="{{record.images.length < maxImages}}" bindtap="addImages">
+        <text class="image-add-icon">+</text>
+        <text class="image-add-text">添加</text>
+      </view>
+    </view>
+    <view class="hint" wx:if="{{record.images.length}}">点击图片预览，最多 {{maxImages}} 张</view>
+    <view class="stat-grid">
+      <view class="stat">
+        <view class="stat-label">剩余平方</view>
+        <view class="stat-value">{{record.remainingArea}}㎡</view>
+      </view>
+      <view class="stat">
+        <view class="stat-label">折算片数</view>
+        <view class="stat-value">{{record.remainingPieces}}片</view>
+      </view>
+      <view class="stat">
+        <view class="stat-label">入库平方</view>
+        <view class="stat-value">{{record.totalArea}}㎡</view>
+      </view>
+      <view class="stat">
+        <view class="stat-label">入库片数</view>
+        <view class="stat-value">{{record.totalPieces}}片</view>
+      </view>
+    </view>
+    <view class="record-remark" wx:if="{{record.remark}}">备注：{{record.remark}}</view>
+  </view>
+
+  <view class="panel section" wx:if="{{record.status !== 'cleared'}}">
+    <view class="tabs">
+      <view class="tab {{tab === 'outbound' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="outbound">出库</view>
+      <view class="tab {{tab === 'inbound' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="inbound">入库</view>
+    </view>
+    <view class="label">{{tab === 'outbound' ? '部分出库' : '追加入库'}}</view>
+    <picker class="picker-box" range="{{units}}" value="{{unitIndex}}" bindchange="onUnit">
+      <view>{{units[unitIndex]}}{{tab === 'outbound' ? '出库' : '入库'}}</view>
+    </picker>
+    <view class="field" style="margin-top: 18rpx;">
+      <input type="digit" value="{{quantity}}" placeholder="请输入{{tab === 'outbound' ? '出库' : '入库'}}数量" bindinput="onQuantity" />
+      <view class="hint">预计{{tab === 'outbound' ? '扣减' : '增加'}}：{{previewArea}}㎡，折算 {{previewPieces}} 片</view>
+    </view>
+    <view class="field">
+      <textarea value="{{remark}}" placeholder="{{tab === 'outbound' ? '出库' : '入库'}}备注，可选" bindinput="onRemark" />
+    </view>
+    <view class="button-row">
+      <button class="primary" bindtap="{{tab === 'outbound' ? 'submitOutbound' : 'submitInbound'}}" loading="{{saving}}">确认{{tab === 'outbound' ? '出库' : '入库'}}</button>
+      <button class="warn {{saving ? 'btn-disabled' : ''}}" bindtap="clearRecord" disabled="{{saving}}">标记清空</button>
+    </view>
+  </view>
+
+  <button class="ghost" bindtap="goMovements">查看库存流水</button>
+</view>

@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "pages/bootstrap/index",
+    "pages/tenant/index",
+    "pages/join/index",
+    "pages/approvals/index",
+    "pages/inventory/index",
+    "pages/inbound-form/index",
+    "pages/inbound-detail/index",
+    "pages/movements/index",
+    "pages/system-admin/index",
+    "pages/inbound-import/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "MiniWMS",
+    "navigationBarBackgroundColor": "#0F766E",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F6F7F8"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

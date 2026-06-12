@@ -1,0 +1,70 @@
+<view class="page">
+  <view class="topbar">
+    <view>
+      <view class="topbar-title">系统管理</view>
+      <view class="meta">仓库审核 · 系统配置</view>
+    </view>
+  </view>
+
+  <view class="tabs">
+    <view class="tab {{tab === 'pending' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="pending">待审核</view>
+    <view class="tab {{tab === 'all' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="all">全部仓库</view>
+    <view class="tab {{tab === 'config' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="config">系统配置</view>
+  </view>
+
+  <!-- 待审核列表 -->
+  <view wx:if="{{tab === 'pending'}}">
+    <view class="list" wx:if="{{pendingTenants.length}}">
+      <view class="card" wx:for="{{pendingTenants}}" wx:key="_id">
+        <view class="card-title">{{item.name}}</view>
+        <view class="meta">邀请码：{{item.inviteCode}}</view>
+        <view class="meta">创建时间：{{item.createdAtText}}</view>
+        <view class="meta">创建者：{{item.createdBy}}</view>
+        <view class="button-row" style="margin-top: 18rpx;">
+          <button class="primary" size="mini" bindtap="approve" data-id="{{item._id}}">通过</button>
+          <button class="warn" size="mini" bindtap="reject" data-id="{{item._id}}">拒绝</button>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:else>暂无待审核仓库</view>
+  </view>
+
+  <!-- 全部仓库 -->
+  <view wx:if="{{tab === 'all'}}">
+    <view class="list" wx:if="{{allTenants.length}}">
+      <view class="card" wx:for="{{allTenants}}" wx:key="_id">
+        <view class="card-head">
+          <view class="card-info">
+            <view class="card-title">{{item.name}}</view>
+            <view class="meta">邀请码：{{item.inviteCode}}</view>
+            <view class="meta">访问状态：{{item.accessStatusText}}</view>
+            <view class="meta">创建时间：{{item.createdAtText}}</view>
+            <view class="meta">创建者：{{item.createdBy}}</view>
+          </view>
+          <text class="badge {{item.status === 'active' ? '' : item.status === 'pending' ? 'warn' : 'muted'}}">{{item.status === 'active' ? '已通过' : item.status === 'pending' ? '待审核' : '已拒绝'}}</text>
+        </view>
+        <view class="button-row" style="margin-top: 18rpx;">
+          <button class="primary" size="mini" bindtap="enterTenant" data-item="{{item}}">进入仓库</button>
+          <button class="{{item.accessStatus === 'disabled' ? 'primary' : 'warn'}}" size="mini" bindtap="toggleAccess" data-item="{{item}}">{{item.accessStatus === 'disabled' ? '启用' : '禁用'}}</button>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:else>暂无仓库</view>
+  </view>
+
+  <!-- 系统配置 -->
+  <view wx:if="{{tab === 'config'}}">
+    <view class="panel">
+      <view class="section-title">基础配置</view>
+      <view class="field">
+        <text class="label">每个用户最多创建仓库数</text>
+        <input type="digit" value="{{maxInput}}" bindinput="onMaxInput" placeholder="例如：3(个)" />
+      </view>
+      <view class="field">
+        <text class="label">每条入库记录最多图片数</text>
+        <input type="digit" value="{{maxImagesInput}}" bindinput="onMaxImagesInput" placeholder="例如：3(张)" />
+      </view>
+      <button class="primary" bindtap="saveConfig" loading="{{saving}}">保存配置</button>
+    </view>
+  </view>
+</view>

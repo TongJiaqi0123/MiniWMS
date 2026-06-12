@@ -1,0 +1,29 @@
+<view class="page">
+  <view class="topbar">
+    <view>
+      <view class="topbar-title">成员审批</view>
+      <view class="meta">{{tenant.tenantName}}</view>
+    </view>
+  </view>
+
+  <view class="invite-bar" wx:if="{{inviteCode}}">
+    <view class="invite-bar-left">
+      <text class="invite-bar-label">邀请码</text>
+      <text class="invite-bar-code" selectable="{{true}}">{{inviteCode}}</text>
+    </view>
+    <button class="ghost" size="mini" bindtap="copyCode">复制</button>
+  </view>
+
+  <view class="list" wx:if="{{requests.length}}">
+    <view class="card" wx:for="{{requests}}" wx:key="_id">
+      <view class="card-title">{{item.remark || item.openid}}</view>
+      <view class="meta">申请人：{{item.openid}}</view>
+      <view class="meta">申请时间：{{item.createdAtText}}</view>
+      <view class="button-row" style="margin-top: 18rpx;">
+        <button class="primary" size="mini" bindtap="review" data-id="{{item._id}}" data-action="approved">通过</button>
+        <button class="ghost" size="mini" bindtap="review" data-id="{{item._id}}" data-action="rejected">拒绝</button>
+      </view>
+    </view>
+  </view>
+  <view class="empty" wx:else>暂无待审批申请</view>
+</view>

@@ -1,0 +1,29 @@
+# Windows
+Desktop.ini
+Thumbs.db
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+
+# Node.js
+node_modules/
+package-lock.json
+
+# 微信开发者工具
+project.private.config.json
+miniprogram/sitemap.json
+
+# 下载目录
+downloads/
+
+# 一次性修复脚本
+_fix_cf.js
+_fix_inv4.js
+
+# 补丁文件
+*.patch

@@ -1,0 +1,14 @@
+.reverse-btn {
+  padding: 10rpx 24rpx;
+  background: #a33b2f;
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: 700;
+  border-radius: 10rpx;
+  flex-shrink: 0;
+}
+
+.reverse-btn:active {
+  transform: scale(0.95);
+  opacity: 0.9;
+}

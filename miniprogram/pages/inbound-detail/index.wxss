@@ -1,0 +1,21 @@
+.tabs {
+  background: #e0ebe7;
+}
+
+.tab {
+  color: #3d5a54;
+  font-weight: 800;
+}
+
+.tab-active {
+  color: #ffffff;
+  background: #0f766e;
+  border-bottom: none;
+}
+
+.btn-disabled {
+  background: #c4ccc9 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  pointer-events: none;
+}

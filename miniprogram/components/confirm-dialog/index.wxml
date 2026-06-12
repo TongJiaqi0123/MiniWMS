@@ -1,0 +1,14 @@
+<view class="mask" wx:if="{{visible}}" catchtouchmove="preventTouchMove">
+  <view class="dialog">
+    <view class="dialog-title" wx:if="{{title}}">{{title}}</view>
+    <view class="dialog-body">
+      <view class="dialog-line" wx:for="{{lines}}" wx:key="index">
+        <text class="{{item.bold ? 'text-bold' : ''}}">{{item.text}}</text>
+      </view>
+    </view>
+    <view class="dialog-footer">
+      <view class="dialog-btn dialog-btn-cancel" bindtap="onCancel">取消</view>
+      <view class="dialog-btn dialog-btn-confirm" bindtap="onConfirm">确定</view>
+    </view>
+  </view>
+</view>

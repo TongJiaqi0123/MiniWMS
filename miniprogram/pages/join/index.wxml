@@ -1,0 +1,17 @@
+<view class="page">
+  <view class="hero">
+    <view class="title">申请加入仓库</view>
+    <view class="subtitle">输入管理员提供的邀请码，提交后需要管理员审批，通过后即可进入仓库。</view>
+  </view>
+  <view class="panel">
+    <view class="field">
+      <text class="label">邀请码</text>
+      <input value="{{inviteCode}}" placeholder="请输入邀请码" bindinput="onCode" />
+    </view>
+    <view class="field">
+      <text class="label">申请备注</text>
+      <textarea value="{{remark}}" placeholder="可填写姓名、岗位或联系电话" bindinput="onRemark" />
+    </view>
+    <button class="primary" loading="{{saving}}" bindtap="submit">提交申请</button>
+  </view>
+</view>

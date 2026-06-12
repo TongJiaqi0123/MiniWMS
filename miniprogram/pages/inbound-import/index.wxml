@@ -1,0 +1,36 @@
+<view class="page">
+  <view class="topbar">
+    <view>
+      <view class="topbar-title">Excel 导入入库</view>
+      <view class="meta">按固定表头批量新增入库记录</view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-title">模板格式</view>
+    <view class="meta">模板A：入库名称 | 长宽单位 | 长度 | 宽度 | 总片数</view>
+    <view class="meta">模板B：入库名称 | 长宽单位 | 长度 | 宽度 | 总片数 | 总平方 | 备注</view>
+    <view class="meta">长宽单位支持 m / cm / mm；空行会自动忽略。</view>
+  </view>
+
+  <view class="panel">
+    <view class="section-title">选择文件</view>
+    <button class="ghost" bindtap="chooseFile">选择 Excel 文件</button>
+    <view class="meta" wx:if="{{fileName}}">已选：{{fileName}}</view>
+    <view class="meta" wx:else>支持 .xls / .xlsx</view>
+    <button class="primary" bindtap="startImport" loading="{{loading}}" disabled="{{!fileId}}">开始导入</button>
+  </view>
+
+  <view class="panel" wx:if="{{result}}">
+    <view class="section-title">导入结果</view>
+    <view class="meta">读取行数：{{result.total}}</view>
+    <view class="meta">成功导入：{{result.imported}}</view>
+    <view class="meta" wx:if="{{result.errors.length}}">失败行：{{result.errors.length}}</view>
+    <view class="list" wx:if="{{result.errors.length}}" style="margin-top: 16rpx;">
+      <view class="card" wx:for="{{result.errors}}" wx:key="row">
+        <view class="card-title">第 {{item.row}} 行</view>
+        <view class="meta">{{item.reason}}</view>
+      </view>
+    </view>
+  </view>
+</view>

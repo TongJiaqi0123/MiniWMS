@@ -1,0 +1,74 @@
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.dialog {
+  width: 600rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+
+.dialog-title {
+  padding: 36rpx 32rpx 20rpx;
+  font-size: 34rpx;
+  font-weight: 800;
+  color: #16211f;
+  text-align: center;
+}
+
+.dialog-body {
+  padding: 24rpx 36rpx 36rpx;
+}
+
+.dialog-line {
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+  color: #3d5a54;
+  line-height: 1.8;
+}
+
+.dialog-line:last-child {
+  margin-bottom: 0;
+}
+
+.text-bold {
+  font-weight: 800;
+  color: #16211f;
+  font-size: 30rpx;
+}
+
+.dialog-footer {
+  display: flex;
+  border-top: 1rpx solid #e0ebe7;
+}
+
+.dialog-btn {
+  flex: 1;
+  text-align: center;
+  padding: 28rpx 0;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.dialog-btn:active {
+  background: #f5f9f8;
+}
+
+.dialog-btn-cancel {
+  color: #66736f;
+  border-right: 1rpx solid #e0ebe7;
+}
+
+.dialog-btn-confirm {
+  color: #0f766e;
+}

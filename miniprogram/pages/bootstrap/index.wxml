@@ -1,0 +1,56 @@
+﻿<view class="page">
+  <view class="hero">
+    <view class="title">MiniWMS</view>
+    <view class="subtitle">按批次管理库存，轻松出库入库</view>
+  </view>
+
+  <view class="panel section" wx:if="{{loading}}">
+    <view class="empty">正在加载仓库数据...</view>
+  </view>
+
+  <view wx:else>
+    <view class="toolbar toolbar-wrap">
+      <button class="primary" bindtap="goTenant">创建仓库</button>
+      <button class="ghost" bindtap="goJoin">邀请码加入</button>
+      <button class="ghost" wx:if="{{isSystemAdmin || needSystemAdmin}}" bindtap="goSystemAdmin">系统管理</button>
+    </view>
+
+    <view class="section" wx:if="{{tenants.length}}">
+      <view class="label">我的仓库空间</view>
+      <view class="list">
+        <view class="card" wx:for="{{tenants}}" wx:key="tenantId" bindtap="selectTenant" data-item="{{item}}">
+          <view class="card-head">
+            <view class="card-info">
+              <view class="card-title">{{item.tenantName}}</view>
+              <view class="meta" wx:if="{{item.tenantStatus === 'pending'}}">待系统管理员审核通过</view>
+              <view class="meta" wx:else>点击进入库存管理</view>
+            </view>
+            <view>
+              <text class="badge" wx:if="{{item.tenantStatus === 'pending'}}" style="background:#fff3e0;color:#e65100;">待审核</text>
+              <text class="badge" wx:elif="{{item.tenantStatus === 'active'}}">{{item.role === 'admin' ? '管理员' : '操作员'}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{requests.length}}">
+      <view class="label">我的加入申请</view>
+      <view class="list">
+        <view class="card" wx:for="{{requests}}" wx:key="_id">
+          <view class="card-head">
+            <view class="card-info">
+              <view class="card-title">{{item.tenantName || '仓库空间'}}</view>
+              <view class="meta">请等待管理员处理</view>
+            </view>
+            <text class="badge muted">{{item.status === 'pending' ? '待审核' : item.status}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{!tenants.length && !requests.length}}">
+      还没有可用仓库，请先创建仓库，或输入邀请码申请加入。
+    </view>
+  </view>
+</view>

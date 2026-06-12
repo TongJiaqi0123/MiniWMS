@@ -1,0 +1,47 @@
+<view class="page">
+  <view class="hero">
+    <view class="title">新增入库</view>
+    <view class="subtitle">填写规格、平方和片数后，系统会按长宽自动校验单片面积。</view>
+  </view>
+
+  <view class="panel">
+    <view class="field">
+      <text class="label">入库名称</text>
+      <input value="{{form.name}}" placeholder="例如：橡木地板" data-key="name" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <view style="display:flex;align-items:center;justify-content:space-between;">
+        <text class="label">规格长宽（米）</text>
+        <text class="hint" style="margin:0;">单片面积：{{pieceArea}}㎡</text>
+      </view>
+      <view class="button-row">
+        <view class="input-with-unit"><input type="digit" value="{{form.lengthM}}" placeholder="长度" data-key="lengthM" bindinput="onInput" /><text class="unit-suffix">长/m</text></view>
+        <view class="input-with-unit"><input type="digit" value="{{form.widthM}}" placeholder="宽度" data-key="widthM" bindinput="onInput" /><text class="unit-suffix">宽/m</text></view>
+      </view>
+    </view>
+    <view class="field">
+      <text class="label">入库数量</text>
+      <view class="button-row">
+        <view class="input-with-unit"><input type="digit" value="{{form.totalArea}}" placeholder="总平方" data-key="totalArea" bindinput="onInput" /><text class="unit-suffix">㎡</text></view>
+        <view class="input-with-unit"><input type="digit" value="{{form.totalPieces}}" placeholder="总片数" data-key="totalPieces" bindinput="onInput" /><text class="unit-suffix">片</text></view>
+      </view>
+    </view>
+    <view class="field">
+      <text class="label">入库图片（最多 {{maxImages}} 张）</text>
+      <view class="image-manager" wx:if="{{images.length}}">
+        <view class="image-item" wx:for="{{images}}" wx:key="*this">
+          <image class="image-thumb" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-src="{{item}}" />
+          <view class="image-actions">
+            <view class="image-btn image-btn-del" catchtap="deleteImage" data-index="{{index}}">❌</view>
+          </view>
+        </view>
+      </view>
+      <button class="ghost" size="mini" bindtap="chooseImages" wx:if="{{images.length < maxImages}}">选择图片</button>
+    </view>
+    <view class="field">
+      <text class="label">备注</text>
+      <textarea value="{{form.remark}}" placeholder="可填写来源、批次或其他说明" data-key="remark" bindinput="onInput" />
+    </view>
+    <button class="primary" loading="{{saving}}" bindtap="submit">保存入库</button>
+  </view>
+</view>

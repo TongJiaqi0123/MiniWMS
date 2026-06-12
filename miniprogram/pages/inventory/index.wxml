@@ -1,0 +1,73 @@
+﻿<view class="page">
+  <view class="topbar">
+    <view>
+      <view class="topbar-title">{{tenant.tenantName || '库存记录'}}</view>
+      <view class="meta">{{tenant.role === 'admin' ? '管理员' : '操作员'}}</view>
+    </view>
+    <view class="topbar-actions">
+      <button class="ghost" size="mini" wx:if="{{tenant.role === 'admin'}}" bindtap="goApprovals">审批</button>
+      <button class="ghost" size="mini" bindtap="backTenant">切换仓库</button>
+    </view>
+  </view>
+
+  <view class="toolbar">
+    <button class="primary" bindtap="goCreate">新增入库</button>
+  </view>
+
+  <view style="display:flex;align-items:stretch;margin-bottom:22rpx;">
+    <view class="search-toggle" style="flex:1;margin-bottom:0;" bindtap="toggleSearch">
+      <text>筛选</text>
+      <text class="search-arrow" wx:if="{{showSearch}}">▲</text>
+      <text class="search-arrow" wx:else>▼</text>
+    </view>
+    <view wx:if="{{tenant.role === 'admin'}}" style="margin-left:16rpx;padding:20rpx 24rpx;background:#ffffff;border:1rpx solid #dfe8e5;border-radius:16rpx;box-shadow:0 10rpx 28rpx rgba(31,42,38,0.06);font-size:28rpx;font-weight:700;color:#0f766e;display:flex;align-items:center;flex-shrink:0;" bindtap="goImport">导入</view>
+  </view>
+  <view class="search-panel" wx:if="{{showSearch}}">
+    <view class="search-row">
+      <input class="search-input" placeholder="按名称搜索" value="{{searchName}}" data-key="searchName" bindinput="onSearchInput" />
+      <button class="primary" size="mini" bindtap="search">搜索</button>
+    </view>
+    <view class="search-row" wx:if="{{tab !== 'cleared'}}">
+      <input class="search-input" type="digit" placeholder="最小平方" value="{{searchMinArea}}" data-key="searchMinArea" bindinput="onSearchInput" />
+      <input class="search-input" type="digit" placeholder="最大平方" value="{{searchMaxArea}}" data-key="searchMaxArea" bindinput="onSearchInput" />
+      <button class="ghost" size="mini" bindtap="resetSearch">重置</button>
+    </view>
+  </view>
+
+  <view class="tabs">
+    <view class="tab {{tab === 'active' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="active">在库状态</view>
+    <view class="tab {{tab === 'cleared' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="cleared">已清空列表</view>
+  </view>
+
+  <view class="list" wx:if="{{records.length}}">
+    <view class="card" wx:for="{{records}}" wx:key="_id" bindtap="openDetail" data-id="{{item._id}}">
+      <view class="card-head">
+        <image class="card-thumb" wx:if="{{item.images.length}}" src="{{item.images[0]}}" mode="aspectFill" catchtap="previewThumb" data-src="{{item.images[0]}}" data-images="{{item.images}}" />
+        <view class="card-info">
+          <view class="card-title">{{item.name}}</view>
+          <view class="meta" wx:if="{{item.status !== 'cleared'}}">规格：{{item.lengthM}}m × {{item.widthM}}m</view>
+        </view>
+        <text class="badge {{item.status === 'cleared' ? 'muted' : ''}}">{{item.status === 'cleared' ? '已清空' : '在库'}}</text>
+      </view>
+      <view class="stat-grid" wx:if="{{item.status !== 'cleared'}}">
+        <view class="stat">
+          <view class="stat-label">剩余平方</view>
+          <view class="stat-value">{{item.remainingArea}}㎡</view>
+        </view>
+        <view class="stat">
+          <view class="stat-label">折算片数</view>
+          <view class="stat-value">{{item.remainingPieces}}片</view>
+        </view>
+      </view>
+      <view class="card-footer">
+        <text class="meta">入库总量：{{item.totalArea}}㎡ / {{item.totalPieces}}片</text>
+        <text class="meta" wx:if="{{item.status === 'cleared'}}">清空时间：{{item.updatedTimeText}}</text>
+        <text class="meta" wx:else>{{item.createdTimeText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:elif="{{!loadingMore}}">还没有入库记录，点击"新增入库"开始登记。</view>
+  <view class="loading-more" wx:if="{{loadingMore}}">加载中...</view>
+  <view class="loading-more" wx:elif="{{!hasMore && records.length}}">没有更多了</view>
+</view>
