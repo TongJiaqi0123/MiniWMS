@@ -40,13 +40,15 @@ function formatNumber(value, digits = 2) {
 }
 
 function pieceArea(record) {
-  return Number(record.lengthCm || 0) * Number(record.widthCm || 0) / 10000;
+  const area = Number(record.lengthCm || 0) * Number(record.widthCm || 0) / 10000;
+  return Number(area.toFixed(6));
 }
 
 function remainingPieces(record) {
   const area = pieceArea(record);
   if (area <= 0) return 0;
-  return Math.floor(Number(record.remainingArea || 0) / area);
+  const remaining = Number(record.remainingArea || 0);
+  return Math.round(remaining / area);
 }
 
 function formatTime(value) {

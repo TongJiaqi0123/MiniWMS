@@ -39,7 +39,7 @@ function pieceArea(record) {
 function piecesFromArea(area, record) {
   const areaPerPiece = pieceArea(record);
   if (areaPerPiece <= 0) return 0;
-  return Math.floor(Number(area || 0) / areaPerPiece);
+  return Math.round(Number(area || 0) / areaPerPiece);
 }
 
 async function resolveImages(record) {
