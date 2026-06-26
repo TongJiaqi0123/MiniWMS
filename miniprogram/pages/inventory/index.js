@@ -57,10 +57,10 @@ Page({
   _mapRecords(list) {
     return list.map(function (item) {
       var converted = Object.assign({}, item);
-      if (converted.lengthCm !== undefined && converted.lengthM === undefined) {
+      if (converted.lengthCm !== undefined) {
         converted.lengthM = api.formatNumber(Number(converted.lengthCm || 0) / 100, 4);
       }
-      if (converted.widthCm !== undefined && converted.widthM === undefined) {
+      if (converted.widthCm !== undefined) {
         converted.widthM = api.formatNumber(Number(converted.widthCm || 0) / 100, 4);
       }
       return Object.assign(converted, {

@@ -34,10 +34,10 @@ Page({
   load() {
     return api.callWithTenant("inventoryList", { id: this.data.id }).then((data) => {
       const record = data.record;
-      if (record.lengthCm !== undefined && record.lengthM === undefined) {
+      if (record.lengthCm !== undefined) {
         record.lengthM = api.formatNumber(Number(record.lengthCm || 0) / 100, 4);
       }
-      if (record.widthCm !== undefined && record.widthM === undefined) {
+      if (record.widthCm !== undefined) {
         record.widthM = api.formatNumber(Number(record.widthCm || 0) / 100, 4);
       }
       record.pieceArea = api.formatNumber(api.pieceArea(record), 4);

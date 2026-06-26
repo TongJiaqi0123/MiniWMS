@@ -1,8 +1,9 @@
-﻿const {
+const {
   db,
   _,
   ok,
   fail,
+  round,
   requireTenantAccess,
   resolveImages,
   ensureCollections
@@ -66,11 +67,11 @@ exports.main = async (event) => {
     var records = await Promise.all(res.data.map(resolveImages));
     records = records.map((record) => {
       const converted = Object.assign({}, record);
-      if (converted.lengthCm !== undefined && converted.lengthM === undefined) {
-        converted.lengthM = Number(converted.lengthCm || 0) / 100;
+      if (converted.lengthCm !== undefined) {
+        converted.lengthM = round(Number(converted.lengthCm || 0) / 100, 4);
       }
-      if (converted.widthCm !== undefined && converted.widthM === undefined) {
-        converted.widthM = Number(converted.widthCm || 0) / 100;
+      if (converted.widthCm !== undefined) {
+        converted.widthM = round(Number(converted.widthCm || 0) / 100, 4);
       }
       return converted;
     });
